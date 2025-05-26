@@ -6,6 +6,7 @@ import Graphemer from 'graphemer';
 
 import dynamic from 'next/dynamic';
 import classNames from 'classnames';
+import { useTranslation } from 'next-export-i18n';
 import ContentEditable from './ContentEditable';
 import WebsocketService from '../../../services/websocket-service';
 import { websocketServiceAtom } from '../../stores/ClientConfigStore';
@@ -124,6 +125,7 @@ export const ChatTextField: FC<ChatTextFieldProps> = ({ defaultText, enabled, fo
   const websocketService = useRecoilValue<WebsocketService>(websocketServiceAtom);
   const [contentEditable, setContentEditable] = useState(null);
   const [customEmoji, setCustomEmoji] = useState([]);
+  const { t } = useTranslation();
 
   const onRootRef = el => {
     setContentEditable(el);
@@ -136,7 +138,7 @@ export const ChatTextField: FC<ChatTextFieldProps> = ({ defaultText, enabled, fo
 
   const sendMessage = () => {
     if (!websocketService) {
-      console.log('websocketService is not defined');
+      console.log(t('websocketService is not defined'));
       return;
     }
 
@@ -244,7 +246,7 @@ export const ChatTextField: FC<ChatTextFieldProps> = ({ defaultText, enabled, fo
         document.head.appendChild(preImg);
       });
     } catch (e) {
-      console.error('cannot fetch custom emoji', e);
+      console.error(t('cannot fetch custom emoji'), e);
     }
   };
 
@@ -263,7 +265,7 @@ export const ChatTextField: FC<ChatTextFieldProps> = ({ defaultText, enabled, fo
         <ContentEditable
           id="chat-input-content-editable"
           html={defaultText || ''}
-          placeholder={enabled ? 'Send a message to chat' : 'Chat is disabled'}
+          placeholder={enabled ? t('Send a message to chat') : t('Chat is disabled')}
           disabled={!enabled}
           onKeyDown={onKeyDown}
           onContentChange={handleChange}
@@ -271,7 +273,7 @@ export const ChatTextField: FC<ChatTextFieldProps> = ({ defaultText, enabled, fo
           onRootRef={onRootRef}
           style={{ whiteSpace: 'pre-wrap', width: '100%' }}
           role="textbox"
-          aria-label="Chat text input"
+          aria-label={t('Chat text input')}
         />
         {enabled && (
           <div style={{ display: 'flex', paddingLeft: '5px' }}>
@@ -282,18 +284,18 @@ export const ChatTextField: FC<ChatTextFieldProps> = ({ defaultText, enabled, fo
             >
               <button
                 type="button"
-                aria-label="Emoji picker"
+                aria-label={t('Emoji picker')}
                 className={styles.emojiButton}
-                title="Emoji picker button"
+                title={t('Emoji picker button')}
               >
                 <SmileOutlined />
               </button>
             </Popover>
             <button
               type="button"
-              aria-label="Send message"
+              aria-label={t('Send message')}
               className={styles.sendButton}
-              title="Send message Button"
+              title={t('Send message Button')}
               onClick={sendMessage}
             >
               <SendOutlined />
