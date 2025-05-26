@@ -81,6 +81,10 @@
     flex-wrap: wrap;
     justify-content: center;
   }
+  
+  .app-container .layout-header > .ant-space {
+    margin: 0.5rem;
+  }
 }
 
 .app-container .main-content-container {
@@ -106,6 +110,12 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+@media (max-width: 481px) {
+  .app-container .online-status-indicator {
+    margin-top: 0.5rem;
+  }
 }
 
 .app-container .online-status-indicator .online-thumbnail {
@@ -229,6 +239,15 @@
   line-height: 1;
 }
 
+@media (max-width: 481px) {
+  .global-stream-title-container
+    .textfield-with-submit-container
+    .lower-container
+    .update-button-container {
+    margin-left: 0.25em;
+  }
+}
+
 .ant-select:not(.ant-select-customize-input) .ant-select-selector {
   background-color: var(--theme-color-components-form-field-background);
 }
@@ -241,4 +260,22 @@
 
 .ant-modal-title {
   color: var(--theme-color-components-modal-header-text);
+}
+
+/* Mobile navigation improvements */
+@media (max-width: 481px) {
+  .ant-input, .ant-input-affix-wrapper {
+    max-width: calc(100vw - 4rem);
+    font-size: 14px;
+  }
+  
+  .app-container .input-component {
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  .app-container .form-module-container {
+    width: 100%;
+    max-width: 100%;
+  }
 }
