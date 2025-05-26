@@ -8,6 +8,12 @@
   background-color: var(--theme-color-palette-1);
 }
 
+@media (max-width: 768px) {
+  .app-container .side-nav {
+    display: none;
+  }
+}
+
 .app-container .menu-container {
   border-color: transparent;
   background-color: unset;
@@ -55,6 +61,12 @@
   margin-left: 240px;
 }
 
+@media (max-width: 768px) {
+  .app-container .layout-main {
+    margin-left: 0;
+  }
+}
+
 .app-container .layout-header {
   display: flex;
   flex-direction: row;
@@ -64,10 +76,25 @@
   background-color: var(--theme-color-background-main);
 }
 
+@media (max-width: 768px) {
+  .app-container .layout-header {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
 .app-container .main-content-container {
   background-color: var(--theme-color-palette-3);
   padding: 2em 3em 3em;
   min-width: 50vw;
+}
+
+@media (max-width: 768px) {
+  .app-container .main-content-container {
+    padding: 1em 1.5em 1.5em;
+    min-width: auto;
+    width: 100%;
+  }
 }
 
 .app-container .footer-container {
@@ -124,6 +151,15 @@
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 }
 
+@media (max-width: 768px) {
+  .global-stream-title-container {
+    padding-top: 0.5em;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+}
+
 .global-stream-title-container ::placeholder {
   color: #696767;
 }
@@ -135,6 +171,12 @@
   margin-bottom: 0;
 }
 
+@media (max-width: 768px) {
+  .global-stream-title-container .textfield-with-submit-container {
+    width: 100%;
+  }
+}
+
 .global-stream-title-container .textfield-with-submit-container .input-side {
   width: 400px;
   border: 1px solid rgba(120, 113, 255, 0.5);
@@ -143,7 +185,8 @@
 
 @media (max-width: 800px) {
   .global-stream-title-container .textfield-with-submit-container .input-side {
-    width: auto;
+    width: 100%;
+    max-width: calc(100vw - 3rem);
   }
 }
 
@@ -153,6 +196,12 @@
 
 .global-stream-title-container .textfield-with-submit-container .lower-container {
   width: auto;
+}
+
+@media (max-width: 768px) {
+  .global-stream-title-container .textfield-with-submit-container .lower-container {
+    width: 100%;
+  }
 }
 
 .global-stream-title-container .textfield-with-submit-container .lower-container .lower-content {
