@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import { TabsProps } from 'antd';
 import { ErrorBoundary } from 'react-error-boundary';
 import classNames from 'classnames';
+import { useTranslation } from 'next-export-i18n';
 import { SocialLink } from '../../../interfaces/social-link.model';
 import styles from './Content.module.scss';
 import { CustomPageContent } from '../CustomPageContent/CustomPageContent';
@@ -36,13 +37,16 @@ const FollowerCollection = dynamic(
   },
 );
 
-const ComponentErrorFallback = ({ error, resetErrorBoundary }) => (
-  <ComponentError
-    message={error}
-    componentName="MobileContent"
-    retryFunction={resetErrorBoundary}
-  />
-);
+const ComponentErrorFallback = ({ error, resetErrorBoundary }) => {
+  const { t } = useTranslation();
+  return (
+    <ComponentError
+      message={error}
+      componentName={t('MobileContent')}
+      retryFunction={resetErrorBoundary}
+    />
+  );
+};
 
 export const MobileContent: FC<MobileContentProps> = ({
   name,
@@ -54,6 +58,7 @@ export const MobileContent: FC<MobileContentProps> = ({
   supportFediverseFeatures,
   online,
 }) => {
+  const { t } = useTranslation();
   const aboutTabContent = (
     <>
       <ContentHeader name={name} summary={summary} tags={tags} links={socialHandles} logo="/logo" />
@@ -72,9 +77,9 @@ export const MobileContent: FC<MobileContentProps> = ({
 
   const items = [];
 
-  items.push({ label: 'About', key: '0', children: aboutTabContent });
+  items.push({ label: t('About'), key: '0', children: aboutTabContent });
   if (supportFediverseFeatures) {
-    items.push({ label: 'Followers', key: '1', children: followersTabContent });
+    items.push({ label: t('Followers'), key: '1', children: followersTabContent });
   }
 
   return (
