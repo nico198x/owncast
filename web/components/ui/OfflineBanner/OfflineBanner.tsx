@@ -45,23 +45,24 @@ export const OfflineBanner: FC<OfflineBannerProps> = ({
   } else if (!customText && notificationsEnabled && fediverseAccount) {
     text = (
       <span>
-        {t('This stream is offline. You can')}{' '}
+        {t('This stream is offline')}{' '}
         <span role="link" tabIndex={0} className={styles.actionLink} onClick={onNotifyClick}>
-          be notified
+          {t('be notified')}
         </span>{' '}
-        the next time {streamName} goes live or{' '}
+        {t('the next time goes live', { streamer: streamName })}{' '}
+        {t('or')}{' '}
         <span role="link" tabIndex={0} className={styles.actionLink} onClick={onFollowClick}>
-          follow
+          {t('follow')}
         </span>{' '}
-        {fediverseAccount} on the Fediverse.
+        {t('on the Fediverse', { fediverseAccount })}.
       </span>
     );
   } else if (!customText && notificationsEnabled) {
     text = (
       <span>
-        {t('This stream is offline')}.{' '}
+        {t('This stream is offline')}{'.'}
         <span role="link" tabIndex={0} className={styles.actionLink} onClick={onNotifyClick}>
-          Be notified
+          {t('Be notified')}
         </span>{' '}
         {t('the next time goes live', { streamer: streamName })}.
       </span>
@@ -69,7 +70,7 @@ export const OfflineBanner: FC<OfflineBannerProps> = ({
   } else if (!customText && fediverseAccount) {
     text = (
       <span>
-        {t('This stream is offline.')}{' '}
+        {t('This stream is offline')}{'.'}
         <span role="link" tabIndex={0} className={styles.actionLink} onClick={onFollowClick}>
           {t('Follow')}
         </span>{' '}
@@ -81,7 +82,7 @@ export const OfflineBanner: FC<OfflineBannerProps> = ({
       </span>
     );
   } else {
-    text = `This stream is offline. Check back soon!`;
+    text = t('This stream is offline. Check back soon!');
   }
 
   return (
