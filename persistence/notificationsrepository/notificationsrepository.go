@@ -17,12 +17,28 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// Notifier is an instance of the live stream notifier.
-type Notifier struct {
-	datastore        *data.Datastore
-	browser          *browser.Browser
-	discord          *discord.Discord
-	configRepository configrepository.ConfigRepository
+type NotificationsRepository interface {
+	setupBrowserPush() error
+	notifyBrowserPush()
+}
+
+// SqlNotificationsRepository is an instance of the live stream notifier.
+type SqlNotificationsRepository struct {
+	datastore *data.Datastore
+	browser   *browser.Browser
+	discord   *discord.Discord
+}
+
+// NOTE: This is temporary during the transition period.
+var temporaryGlobalInstance NotificationsRepository
+
+// Get will return the user repository.
+func Get() NotificationsRepository {
+	if temporaryGlobalInstance == nil {
+		i := New(data.GetDatastore())
+		temporaryGlobalInstance = i
+	}
+	return temporaryGlobalInstance
 }
 
 // Setup will perform any pre-use setup for the notifier.
@@ -61,8 +77,8 @@ func initializeBrowserPushIfNeeded() {
 }
 
 // New creates a new instance of the Notifier.
-func New(datastore *data.Datastore) (*Notifier, error) {
-	notifier := Notifier{
+func New(datastore *data.Datastore) NotificationsRepository {
+	notifier := SqlNotificationsRepository{
 		datastore:        datastore,
 		configRepository: configrepository.Get(),
 	}
@@ -74,10 +90,10 @@ func New(datastore *data.Datastore) (*Notifier, error) {
 		log.Error(err)
 	}
 
-	return &notifier, nil
+	return &notifier
 }
 
-func (n *Notifier) setupBrowserPush() error {
+func (n *NotificationsRepository) setupBrowserPush() error {
 	if n.configRepository.GetBrowserPushConfig().Enabled {
 		publicKey, err := n.configRepository.GetBrowserPushPublicKey()
 		if err != nil || publicKey == "" {
@@ -98,7 +114,7 @@ func (n *Notifier) setupBrowserPush() error {
 	return nil
 }
 
-func (n *Notifier) notifyBrowserPush() {
+func (n *SqlNotificationsRepository) notifyBrowserPush() {
 	destinations, err := GetNotificationDestinationsForChannel(BrowserPushNotification)
 	if err != nil {
 		log.Errorln("error getting browser push notification destinations", err)
@@ -116,7 +132,7 @@ func (n *Notifier) notifyBrowserPush() {
 	}
 }
 
-func (n *Notifier) setupDiscord() error {
+func (n *SqlNotificationsRepository) setupDiscord() error {
 	discordConfig := n.configRepository.GetDiscordConfig()
 	if discordConfig.Enabled && discordConfig.Webhook != "" {
 		var image string
@@ -136,7 +152,7 @@ func (n *Notifier) setupDiscord() error {
 	return nil
 }
 
-func (n *Notifier) notifyDiscord() {
+func (n *SqlNotificationsRepository) notifyDiscord() {
 	goLiveMessage := n.configRepository.GetDiscordConfig().GoLiveMessage
 	streamTitle := n.configRepository.GetStreamTitle()
 	if streamTitle != "" {
@@ -150,7 +166,7 @@ func (n *Notifier) notifyDiscord() {
 }
 
 // Notify will fire the different notification channels.
-func (n *Notifier) Notify() {
+func (n *SqlNotificationsRepository) Notify() {
 	if n.browser != nil {
 		n.notifyBrowserPush()
 	}
