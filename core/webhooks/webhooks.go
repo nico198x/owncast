@@ -13,7 +13,6 @@ import (
 type WebhookEvent struct {
 	EventData interface{}      `json:"eventData,omitempty"`
 	Type      models.EventType `json:"type"` // messageSent | userJoined | userNameChange
-	Status    models.Status    `json:"status"`
 	ServerURL string           `json:"serverURL,omitempty"`
 }
 
@@ -34,8 +33,7 @@ func SendEventToWebhooks(payload WebhookEvent) {
 }
 
 func sendEventToWebhooks(payload WebhookEvent, wg *sync.WaitGroup) {
-	// Ensure all webhook events have server status and server URL
-	payload.Status = getStatus()
+	// Ensure all webhook events have server URL
 	configRepo := configrepository.Get()
 	payload.ServerURL = configRepo.GetServerURL()
 

@@ -52,6 +52,16 @@ func TestSendChatEvent(t *testing.T) {
 		"clientId": 51,
 		"id": "id",
 		"rawBody": "raw body",
+		"status": {
+			"lastConnectTime": null,
+			"lastDisconnectTime": null,
+			"online": true,
+			"overallMaxViewerCount": 420,
+			"sessionMaxViewerCount": 69,
+			"streamTitle": "my stream",
+			"versionNumber": "1.2.3",
+			"viewerCount": 5
+		},
 		"timestamp": "1970-01-01T00:01:12.000000006Z",
 		"user": {
 			"authenticated": false,
@@ -97,11 +107,19 @@ func TestSendChatEventUsernameChanged(t *testing.T) {
 			NewName: "new name",
 		})
 	}, `{
-		"clientId": 51,
 		"id": "id",
 		"newName": "new name",
+		"status": {
+			"lastConnectTime": null,
+			"lastDisconnectTime": null,
+			"online": true,
+			"overallMaxViewerCount": 420,
+			"sessionMaxViewerCount": 69,
+			"streamTitle": "my stream",
+			"versionNumber": "1.2.3",
+			"viewerCount": 5
+		},
 		"timestamp": "1970-01-01T00:01:12.000000006Z",
-		"type": "NAME_CHANGE",
 		"user": {
 			"authenticated": false,
 			"createdAt": "1970-01-01T00:00:03.000000026Z",
@@ -144,9 +162,17 @@ func TestSendChatEventUserJoined(t *testing.T) {
 			},
 		})
 	}, `{
-		"clientId": 51,
 		"id": "id",
-		"type": "USER_JOINED",
+		"status": {
+			"lastConnectTime": null,
+			"lastDisconnectTime": null,
+			"online": true,
+			"overallMaxViewerCount": 420,
+			"sessionMaxViewerCount": 69,
+			"streamTitle": "my stream",
+			"versionNumber": "1.2.3",
+			"viewerCount": 5
+		},
 		"timestamp": "1970-01-01T00:01:12.000000006Z",
 		"user": {
 			"authenticated": false,
@@ -175,16 +201,24 @@ func TestSendChatEventSetMessageVisibility(t *testing.T) {
 			Visible:          false,
 		})
 	}, `{
-		"MessageIDs": [
+		"id": "id",
+		"ids": [
 			"message1",
 			"message2"
 		],
-		"Visible": false,
-		"body": "",
-		"id": "id",
+		"status": {
+			"lastConnectTime": null,
+			"lastDisconnectTime": null,
+			"online": true,
+			"overallMaxViewerCount": 420,
+			"sessionMaxViewerCount": 69,
+			"streamTitle": "my stream",
+			"versionNumber": "1.2.3",
+			"viewerCount": 5
+		},
 		"timestamp": "1970-01-01T00:01:12.000000006Z",
-		"type": "VISIBILITY-UPDATE",
-		"user": null
+		"user": null,
+		"visible": false
 	}`)
 }
 
@@ -249,9 +283,20 @@ func TestWebhookHasServerStatus(t *testing.T) {
 	// Capture the event
 	event := <-eventChannel
 
-	// Verify the webhook event has a status field
-	if event.Status.VersionNumber == "" {
-		t.Error("Expected webhook event to have server status, but Status.VersionNumber was empty")
+	// Verify the webhook event has a status field in eventData
+	eventData, ok := event.EventData.(map[string]interface{})
+	if !ok {
+		t.Error("Expected EventData to be a map")
+	}
+
+	status, ok := eventData["status"].(map[string]interface{})
+	if !ok {
+		t.Error("Expected eventData to contain status field")
+	}
+
+	versionNumber, ok := status["versionNumber"].(string)
+	if !ok || versionNumber == "" {
+		t.Error("Expected eventData.status to have versionNumber, but it was empty")
 	}
 
 	if event.ServerURL == "" {
