@@ -62,6 +62,10 @@ const EditOutlined = dynamic(() => import('@ant-design/icons/EditOutlined'), {
   ssr: false,
 });
 
+const DownloadOutlined = dynamic(() => import('@ant-design/icons/DownloadOutlined'), {
+  ssr: false,
+});
+
 const FediverseOutlined = dynamic(() => import('../../assets/images/icons/fediverse.svg'), {
   ssr: false,
 });
@@ -270,8 +274,13 @@ export const MainLayout: FC<MainLayoutProps> = ({ children }) => {
       children: integrationsMenu,
     },
     upgradeVersion && {
+      type: 'divider',
+      key: 'upgrade-divider',
+    },
+    upgradeVersion && {
       key: '/admin/upgrade',
       label: <Link href="/admin/upgrade">{upgradeMessage}</Link>,
+      icon: <DownloadOutlined />,
     },
     {
       key: '/admin/help',
