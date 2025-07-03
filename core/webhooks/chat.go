@@ -18,6 +18,7 @@ func SendChatEvent(chatEvent *events.UserMessageEvent) {
 			Visible:   chatEvent.HiddenAt == nil,
 			Timestamp: &chatEvent.Timestamp,
 			Status:    getStatus(),
+			ServerURL: getServerURL(),
 		},
 	}
 
@@ -34,6 +35,7 @@ func SendChatEventUsernameChanged(event events.NameChangeEvent) {
 			User:      event.User,
 			NewName:   event.NewName,
 			Status:    getStatus(),
+			ServerURL: getServerURL(),
 		},
 	}
 
@@ -49,6 +51,7 @@ func SendChatEventUserJoined(event events.UserJoinedEvent) {
 			Timestamp: event.Timestamp,
 			User:      event.User,
 			Status:    getStatus(),
+			ServerURL: getServerURL(),
 		},
 	}
 
@@ -64,6 +67,7 @@ func SendChatEventUserParted(event events.UserPartEvent) {
 			Timestamp: event.Timestamp,
 			User:      event.User,
 			Status:    getStatus(),
+			ServerURL: getServerURL(),
 		},
 	}
 
@@ -82,6 +86,7 @@ func SendChatEventSetMessageVisibility(event events.SetMessageVisibilityEvent) {
 			Visible:    event.Visible,
 			MessageIDs: event.MessageIDs,
 			Status:     getStatus(),
+			ServerURL:  getServerURL(),
 		},
 	}
 

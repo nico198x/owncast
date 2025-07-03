@@ -13,7 +13,6 @@ import (
 type WebhookEvent struct {
 	EventData interface{}      `json:"eventData,omitempty"`
 	Type      models.EventType `json:"type"` // messageSent | userJoined | userNameChange
-	ServerURL string           `json:"serverURL,omitempty"`
 }
 
 // WebhookChatMessage represents a single chat message sent as a webhook payload.
@@ -26,6 +25,7 @@ type WebhookChatMessage struct {
 	ClientID  uint          `json:"clientId,omitempty"`
 	Visible   bool          `json:"visible"`
 	Status    models.Status `json:"status"`
+	ServerURL string        `json:"serverURL,omitempty"`
 }
 
 // WebhookUserJoinedEventData represents user joined event data sent as a webhook payload.
@@ -34,6 +34,7 @@ type WebhookUserJoinedEventData struct {
 	Timestamp time.Time     `json:"timestamp"`
 	User      *models.User  `json:"user"`
 	Status    models.Status `json:"status"`
+	ServerURL string        `json:"serverURL,omitempty"`
 }
 
 // WebhookUserPartEventData represents user parted event data sent as a webhook payload.
@@ -42,6 +43,7 @@ type WebhookUserPartEventData struct {
 	Timestamp time.Time     `json:"timestamp"`
 	User      *models.User  `json:"user"`
 	Status    models.Status `json:"status"`
+	ServerURL string        `json:"serverURL,omitempty"`
 }
 
 // WebhookNameChangeEventData represents name change event data sent as a webhook payload.
@@ -51,6 +53,7 @@ type WebhookNameChangeEventData struct {
 	User      *models.User  `json:"user"`
 	NewName   string        `json:"newName"`
 	Status    models.Status `json:"status"`
+	ServerURL string        `json:"serverURL,omitempty"`
 }
 
 // WebhookVisibilityToggleEventData represents message visibility toggle event data sent as a webhook payload.
@@ -61,6 +64,7 @@ type WebhookVisibilityToggleEventData struct {
 	Visible    bool          `json:"visible"`
 	MessageIDs []string      `json:"ids"`
 	Status     models.Status `json:"status"`
+	ServerURL  string        `json:"serverURL,omitempty"`
 }
 
 // SendEventToWebhooks will send a single webhook event to all webhook destinations.
@@ -69,10 +73,6 @@ func SendEventToWebhooks(payload WebhookEvent) {
 }
 
 func sendEventToWebhooks(payload WebhookEvent, wg *sync.WaitGroup) {
-	// Ensure all webhook events have server URL
-	configRepo := configrepository.Get()
-	payload.ServerURL = configRepo.GetServerURL()
-
 	webhooksRepo := webhookrepository.Get()
 	webhooks := webhooksRepo.GetWebhooksForEvent(payload.Type)
 
@@ -83,4 +83,9 @@ func sendEventToWebhooks(payload WebhookEvent, wg *sync.WaitGroup) {
 		}
 		addToQueue(webhook, payload, wg)
 	}
+}
+
+func getServerURL() string {
+	configRepo := configrepository.Get()
+	return configRepo.GetServerURL()
 }

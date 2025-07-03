@@ -52,6 +52,7 @@ func TestSendChatEvent(t *testing.T) {
 		"clientId": 51,
 		"id": "id",
 		"rawBody": "raw body",
+		"serverURL": "http://localhost:8080",
 		"status": {
 			"lastConnectTime": null,
 			"lastDisconnectTime": null,
@@ -109,6 +110,7 @@ func TestSendChatEventUsernameChanged(t *testing.T) {
 	}, `{
 		"id": "id",
 		"newName": "new name",
+		"serverURL": "http://localhost:8080",
 		"status": {
 			"lastConnectTime": null,
 			"lastDisconnectTime": null,
@@ -163,6 +165,7 @@ func TestSendChatEventUserJoined(t *testing.T) {
 		})
 	}, `{
 		"id": "id",
+		"serverURL": "http://localhost:8080",
 		"status": {
 			"lastConnectTime": null,
 			"lastDisconnectTime": null,
@@ -206,6 +209,7 @@ func TestSendChatEventSetMessageVisibility(t *testing.T) {
 			"message1",
 			"message2"
 		],
+		"serverURL": "http://localhost:8080",
 		"status": {
 			"lastConnectTime": null,
 			"lastDisconnectTime": null,
@@ -299,8 +303,9 @@ func TestWebhookHasServerStatus(t *testing.T) {
 		t.Error("Expected eventData.status to have versionNumber, but it was empty")
 	}
 
-	if event.ServerURL == "" {
-		t.Error("Expected webhook event to have server URL, but ServerURL was empty")
+	serverURL, ok := eventData["serverURL"].(string)
+	if !ok || serverURL == "" {
+		t.Error("Expected eventData to have serverURL, but it was empty")
 	}
 
 	if event.Type != models.UserJoined {
