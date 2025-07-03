@@ -9,15 +9,15 @@ import (
 func SendChatEvent(chatEvent *events.UserMessageEvent) {
 	webhookEvent := WebhookEvent{
 		Type: chatEvent.GetMessageType(),
-		EventData: map[string]interface{}{
-			"user":      chatEvent.User,
-			"body":      chatEvent.Body,
-			"clientId":  chatEvent.ClientID,
-			"rawBody":   chatEvent.RawBody,
-			"id":        chatEvent.ID,
-			"visible":   chatEvent.HiddenAt == nil,
-			"timestamp": &chatEvent.Timestamp,
-			"status":    getStatus(),
+		EventData: &WebhookChatMessage{
+			User:      chatEvent.User,
+			Body:      chatEvent.Body,
+			ClientID:  chatEvent.ClientID,
+			RawBody:   chatEvent.RawBody,
+			ID:        chatEvent.ID,
+			Visible:   chatEvent.HiddenAt == nil,
+			Timestamp: &chatEvent.Timestamp,
+			Status:    getStatus(),
 		},
 	}
 
@@ -28,12 +28,12 @@ func SendChatEvent(chatEvent *events.UserMessageEvent) {
 func SendChatEventUsernameChanged(event events.NameChangeEvent) {
 	webhookEvent := WebhookEvent{
 		Type: models.UserNameChanged,
-		EventData: map[string]interface{}{
-			"id":        event.ID,
-			"timestamp": event.Timestamp,
-			"user":      event.User,
-			"newName":   event.NewName,
-			"status":    getStatus(),
+		EventData: &WebhookNameChangeEventData{
+			ID:        event.ID,
+			Timestamp: event.Timestamp,
+			User:      event.User,
+			NewName:   event.NewName,
+			Status:    getStatus(),
 		},
 	}
 
@@ -44,11 +44,11 @@ func SendChatEventUsernameChanged(event events.NameChangeEvent) {
 func SendChatEventUserJoined(event events.UserJoinedEvent) {
 	webhookEvent := WebhookEvent{
 		Type: models.UserJoined,
-		EventData: map[string]interface{}{
-			"id":        event.ID,
-			"timestamp": event.Timestamp,
-			"user":      event.User,
-			"status":    getStatus(),
+		EventData: &WebhookUserJoinedEventData{
+			ID:        event.ID,
+			Timestamp: event.Timestamp,
+			User:      event.User,
+			Status:    getStatus(),
 		},
 	}
 
@@ -59,11 +59,11 @@ func SendChatEventUserJoined(event events.UserJoinedEvent) {
 func SendChatEventUserParted(event events.UserPartEvent) {
 	webhookEvent := WebhookEvent{
 		Type: events.UserParted,
-		EventData: map[string]interface{}{
-			"id":        event.ID,
-			"timestamp": event.Timestamp,
-			"user":      event.User,
-			"status":    getStatus(),
+		EventData: &WebhookUserPartEventData{
+			ID:        event.ID,
+			Timestamp: event.Timestamp,
+			User:      event.User,
+			Status:    getStatus(),
 		},
 	}
 
@@ -75,13 +75,13 @@ func SendChatEventUserParted(event events.UserPartEvent) {
 func SendChatEventSetMessageVisibility(event events.SetMessageVisibilityEvent) {
 	webhookEvent := WebhookEvent{
 		Type: models.VisibiltyToggled,
-		EventData: map[string]interface{}{
-			"id":        event.ID,
-			"timestamp": event.Timestamp,
-			"user":      event.User,
-			"visible":   event.Visible,
-			"ids":       event.MessageIDs,
-			"status":    getStatus(),
+		EventData: &WebhookVisibilityToggleEventData{
+			ID:         event.ID,
+			Timestamp:  event.Timestamp,
+			User:       event.User,
+			Visible:    event.Visible,
+			MessageIDs: event.MessageIDs,
+			Status:     getStatus(),
 		},
 	}
 

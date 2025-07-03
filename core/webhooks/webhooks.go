@@ -18,13 +18,49 @@ type WebhookEvent struct {
 
 // WebhookChatMessage represents a single chat message sent as a webhook payload.
 type WebhookChatMessage struct {
-	User      *models.User `json:"user,omitempty"`
-	Timestamp *time.Time   `json:"timestamp,omitempty"`
-	Body      string       `json:"body,omitempty"`
-	RawBody   string       `json:"rawBody,omitempty"`
-	ID        string       `json:"id,omitempty"`
-	ClientID  uint         `json:"clientId,omitempty"`
-	Visible   bool         `json:"visible"`
+	User      *models.User  `json:"user,omitempty"`
+	Timestamp *time.Time    `json:"timestamp,omitempty"`
+	Body      string        `json:"body,omitempty"`
+	RawBody   string        `json:"rawBody,omitempty"`
+	ID        string        `json:"id,omitempty"`
+	ClientID  uint          `json:"clientId,omitempty"`
+	Visible   bool          `json:"visible"`
+	Status    models.Status `json:"status"`
+}
+
+// WebhookUserJoinedEventData represents user joined event data sent as a webhook payload.
+type WebhookUserJoinedEventData struct {
+	ID        string        `json:"id"`
+	Timestamp time.Time     `json:"timestamp"`
+	User      *models.User  `json:"user"`
+	Status    models.Status `json:"status"`
+}
+
+// WebhookUserPartEventData represents user parted event data sent as a webhook payload.
+type WebhookUserPartEventData struct {
+	ID        string        `json:"id"`
+	Timestamp time.Time     `json:"timestamp"`
+	User      *models.User  `json:"user"`
+	Status    models.Status `json:"status"`
+}
+
+// WebhookNameChangeEventData represents name change event data sent as a webhook payload.
+type WebhookNameChangeEventData struct {
+	ID        string        `json:"id"`
+	Timestamp time.Time     `json:"timestamp"`
+	User      *models.User  `json:"user"`
+	NewName   string        `json:"newName"`
+	Status    models.Status `json:"status"`
+}
+
+// WebhookVisibilityToggleEventData represents message visibility toggle event data sent as a webhook payload.
+type WebhookVisibilityToggleEventData struct {
+	ID         string        `json:"id"`
+	Timestamp  time.Time     `json:"timestamp"`
+	User       *models.User  `json:"user"`
+	Visible    bool          `json:"visible"`
+	MessageIDs []string      `json:"ids"`
+	Status     models.Status `json:"status"`
 }
 
 // SendEventToWebhooks will send a single webhook event to all webhook destinations.
