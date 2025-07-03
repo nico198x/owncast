@@ -29,7 +29,6 @@ func TestSendStreamStatusEvent(t *testing.T) {
 			"lastDisconnectTime": null,
 			"online": true,
 			"overallMaxViewerCount": 420,
-			"serverURL": "http://localhost:8080",
 			"sessionMaxViewerCount": 69,
 			"streamTitle": "my stream",
 			"versionNumber": "1.2.3",

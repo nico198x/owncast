@@ -9,6 +9,7 @@ import (
 
 	"github.com/owncast/owncast/core/chat/events"
 	"github.com/owncast/owncast/models"
+	"github.com/owncast/owncast/persistence/configrepository"
 	"github.com/owncast/owncast/persistence/webhookrepository"
 )
 
@@ -189,6 +190,10 @@ func TestSendChatEventSetMessageVisibility(t *testing.T) {
 
 // TestWebhookHasServerStatus verifies that all webhook events include server status
 func TestWebhookHasServerStatus(t *testing.T) {
+	// Set up server configuration
+	configRepo := configrepository.Get()
+	configRepo.SetServerURL("http://localhost:8080")
+
 	eventChannel := make(chan WebhookEvent)
 
 	// Set up a server.
@@ -249,8 +254,8 @@ func TestWebhookHasServerStatus(t *testing.T) {
 		t.Error("Expected webhook event to have server status, but Status.VersionNumber was empty")
 	}
 
-	if event.Status.ServerURL == "" {
-		t.Error("Expected webhook event to have server URL, but Status.ServerURL was empty")
+	if event.ServerURL == "" {
+		t.Error("Expected webhook event to have server URL, but ServerURL was empty")
 	}
 
 	if event.Type != models.UserJoined {

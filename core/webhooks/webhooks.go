@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/owncast/owncast/models"
+	"github.com/owncast/owncast/persistence/configrepository"
 	"github.com/owncast/owncast/persistence/webhookrepository"
 )
 
@@ -13,6 +14,7 @@ type WebhookEvent struct {
 	EventData interface{}      `json:"eventData,omitempty"`
 	Type      models.EventType `json:"type"` // messageSent | userJoined | userNameChange
 	Status    models.Status    `json:"status"`
+	ServerURL string           `json:"serverURL"`
 }
 
 // WebhookChatMessage represents a single chat message sent as a webhook payload.
@@ -32,8 +34,10 @@ func SendEventToWebhooks(payload WebhookEvent) {
 }
 
 func sendEventToWebhooks(payload WebhookEvent, wg *sync.WaitGroup) {
-	// Ensure all webhook events have server status
+	// Ensure all webhook events have server status and server URL
 	payload.Status = getStatus()
+	configRepo := configrepository.Get()
+	payload.ServerURL = configRepo.GetServerURL()
 
 	webhooksRepo := webhookrepository.Get()
 	webhooks := webhooksRepo.GetWebhooksForEvent(payload.Type)

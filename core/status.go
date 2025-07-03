@@ -27,7 +27,6 @@ func GetStatus() models.Status {
 		LastConnectTime:       _stats.LastConnectTime,
 		VersionNumber:         config.VersionNumber,
 		StreamTitle:           configRepository.GetStreamTitle(),
-		ServerURL:             configRepository.GetServerURL(),
 	}
 }
 
