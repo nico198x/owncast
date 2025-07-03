@@ -14,7 +14,7 @@ type WebhookEvent struct {
 	EventData interface{}      `json:"eventData,omitempty"`
 	Type      models.EventType `json:"type"` // messageSent | userJoined | userNameChange
 	Status    models.Status    `json:"status"`
-	ServerURL string           `json:"serverURL"`
+	ServerURL string           `json:"serverURL,omitempty"`
 }
 
 // WebhookChatMessage represents a single chat message sent as a webhook payload.
