@@ -1,11 +1,15 @@
 package webhooks
 
 import (
+	"encoding/json"
+	"net/http"
+	"net/http/httptest"
 	"testing"
 	"time"
 
 	"github.com/owncast/owncast/core/chat/events"
 	"github.com/owncast/owncast/models"
+	"github.com/owncast/owncast/persistence/webhookrepository"
 )
 
 func TestSendChatEvent(t *testing.T) {
@@ -181,4 +185,75 @@ func TestSendChatEventSetMessageVisibility(t *testing.T) {
 		"type": "VISIBILITY-UPDATE",
 		"user": null
 	}`)
+}
+
+// TestWebhookHasServerStatus verifies that all webhook events include server status
+func TestWebhookHasServerStatus(t *testing.T) {
+	eventChannel := make(chan WebhookEvent)
+
+	// Set up a server.
+	svr := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		data := WebhookEvent{}
+		json.NewDecoder(r.Body).Decode(&data)
+		eventChannel <- data
+	}))
+	defer svr.Close()
+
+	webhooksRepo := webhookrepository.Get()
+
+	// Subscribe to the webhook.
+	hook, err := webhooksRepo.InsertWebhook(svr.URL, []models.EventType{models.UserJoined})
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer func() {
+		if err := webhooksRepo.DeleteWebhook(hook); err != nil {
+			t.Error(err)
+		}
+	}()
+
+	// Send a chat event
+	timestamp := time.Unix(72, 6).UTC()
+	user := models.User{
+		ID:              "user id",
+		DisplayName:     "display name",
+		DisplayColor:    4,
+		CreatedAt:       time.Unix(3, 26).UTC(),
+		DisabledAt:      nil,
+		PreviousNames:   []string{"somebody"},
+		NameChangedAt:   nil,
+		Scopes:          []string{},
+		IsBot:           false,
+		AuthenticatedAt: nil,
+		Authenticated:   false,
+	}
+
+	SendChatEventUserJoined(events.UserJoinedEvent{
+		Event: events.Event{
+			Type:      events.UserJoined,
+			ID:        "id",
+			Timestamp: timestamp,
+		},
+		UserEvent: events.UserEvent{
+			User:     &user,
+			ClientID: 51,
+			HiddenAt: nil,
+		},
+	})
+
+	// Capture the event
+	event := <-eventChannel
+
+	// Verify the webhook event has a status field
+	if event.Status.VersionNumber == "" {
+		t.Error("Expected webhook event to have server status, but Status.VersionNumber was empty")
+	}
+
+	if event.Status.ServerURL == "" {
+		t.Error("Expected webhook event to have server URL, but Status.ServerURL was empty")
+	}
+
+	if event.Type != models.UserJoined {
+		t.Errorf("Expected event type %v but got %v", models.UserJoined, event.Type)
+	}
 }

@@ -12,6 +12,7 @@ import (
 type WebhookEvent struct {
 	EventData interface{}      `json:"eventData,omitempty"`
 	Type      models.EventType `json:"type"` // messageSent | userJoined | userNameChange
+	Status    models.Status    `json:"status"`
 }
 
 // WebhookChatMessage represents a single chat message sent as a webhook payload.
@@ -31,6 +32,9 @@ func SendEventToWebhooks(payload WebhookEvent) {
 }
 
 func sendEventToWebhooks(payload WebhookEvent, wg *sync.WaitGroup) {
+	// Ensure all webhook events have server status
+	payload.Status = getStatus()
+	
 	webhooksRepo := webhookrepository.Get()
 	webhooks := webhooksRepo.GetWebhooksForEvent(payload.Type)
 

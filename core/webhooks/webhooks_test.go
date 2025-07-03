@@ -27,6 +27,7 @@ func fakeGetStatus() models.Status {
 		SessionMaxViewerCount: 69,
 		StreamTitle:           "my stream",
 		VersionNumber:         "1.2.3",
+		ServerURL:             "http://localhost:8080",
 	}
 }
 

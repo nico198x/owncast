@@ -12,6 +12,7 @@ type Status struct {
 	ViewerCount           int    `json:"viewerCount"`
 	OverallMaxViewerCount int    `json:"overallMaxViewerCount"`
 	SessionMaxViewerCount int    `json:"sessionMaxViewerCount"`
+	ServerURL             string `json:"serverURL"`
 
 	Online bool `json:"online"`
 }
