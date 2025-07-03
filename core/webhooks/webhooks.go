@@ -34,7 +34,7 @@ func SendEventToWebhooks(payload WebhookEvent) {
 func sendEventToWebhooks(payload WebhookEvent, wg *sync.WaitGroup) {
 	// Ensure all webhook events have server status
 	payload.Status = getStatus()
-	
+
 	webhooksRepo := webhookrepository.Get()
 	webhooks := webhooksRepo.GetWebhooksForEvent(payload.Type)
 
