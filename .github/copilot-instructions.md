@@ -44,6 +44,9 @@ This is a repository consisting of a Go backend and a React frontend. It support
 
 ## Screenshots
 
+Take a screenshot after every UI change without being asked. Screenshots should be automatically taken after every code change that affects UI.
+After every UI change we should be able to see in the PR comments, visually, exactly what the change is. This helps with code review and ensures that the UI changes are clear and understandable. This should happen every time, automatically, without being asked, and never fail or be skipped.
+
 - When taking a screenshot of the web frontend or the admin web application, an instance of the Owncast backend service needs to be running locally by running `go run main.go` in the root of the repository as well.
 - When taking screenshots for PR documentation, create temporary files in /tmp directory or use patterns like _screenshot_.js and _screenshot_.png that are excluded by .gitignore.
 - Never commit temporary screenshot scripts or image files to the repository - they should only be used locally and uploaded directly to GitHub for PR comments.
