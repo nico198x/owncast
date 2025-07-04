@@ -274,12 +274,17 @@ export const MainLayout: FC<MainLayoutProps> = ({ children }) => {
       children: integrationsMenu,
     },
     upgradeVersion && {
-      type: 'divider',
       key: 'upgrade-divider',
+      label: <div className="upgrade-menu-divider" />,
+      disabled: true,
     },
     upgradeVersion && {
       key: '/admin/upgrade',
-      label: <Link href="/admin/upgrade">{upgradeMessage}</Link>,
+      label: (
+        <Link href="/admin/upgrade">
+          <strong>{upgradeMessage}</strong>
+        </Link>
+      ),
       icon: <DownloadOutlined />,
     },
     {

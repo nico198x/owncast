@@ -193,3 +193,11 @@
 .ant-modal-title {
   color: var(--theme-color-components-modal-header-text);
 }
+
+/* Custom upgrade menu divider */
+.upgrade-menu-divider {
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin: 8px 16px;
+  width: calc(100% - 32px);
+}
