@@ -52,6 +52,7 @@
 		"i18next-scanner",
 		"@types/chart.js",
 		"@types/classnames",
-		"@types/video.js"
+		"@types/video.js",
+		"playwright"
 	]
 }
