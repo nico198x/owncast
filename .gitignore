@@ -47,3 +47,8 @@ web/style-definitions/build/
 
 web/public/sw.js
 web/public/workbox-*.js
+
+# Temporary screenshot files and scripts
+*screenshot*.png
+*screenshot*.js
+screenshot_*.js
