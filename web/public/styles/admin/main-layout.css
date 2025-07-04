@@ -120,7 +120,7 @@
   align-items: center;
   width: 100%;
   padding-top: 1em;
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px -1px rgb(0 0 0 / 10%);
 }
 
 .global-stream-title-container ::placeholder {
@@ -136,11 +136,11 @@
 
 .global-stream-title-container .textfield-with-submit-container .input-side {
   width: 400px;
-  border: 1px solid rgba(120, 113, 255, 0.5);
+  border: 1px solid rgb(120 113 255 / 50%);
   border-radius: 0.75rem;
 }
 
-@media (max-width: 800px) {
+@media (width <= 800px) {
   .global-stream-title-container .textfield-with-submit-container .input-side {
     width: auto;
   }
