@@ -26,6 +26,12 @@ This is a repository consisting of a Go backend and a React frontend. It support
 - `test/automated/browser`: A series of automated browser UI tests for actual real-world browser interaction.
 - `build/web`: Script to build and bundle the web application.
 
+## Testing web frontend
+
+Testing the web frontend requires running the frontend development server and the backend service together. The frontend development server must be started using `npm run dev` in the `web` directory, which will serve the web application at `http://localhost:3000`. The backend service can be started using `go run main.go` in the root of the repository.
+
+Do not access the web application via http://localhost:8080 or build the web project to copy files to the `static/web` directory for local development.
+
 ## Key Guidelines
 
 1. All APIs are to be documented using OpenAPI specifications and code is to be generated using `build/gen-api.sh`. Additional details can be found at https://docs.owncast.dev/api-web-routing.
@@ -35,7 +41,7 @@ This is a repository consisting of a Go backend and a React frontend. It support
 5. For UI component changes, a before and after screenshot of the component should always be added to the pull request to help with review. Additionally a link to the PR's Storybook on Chromatic via the PR's Chromatic job should be included to help with review.
 6. For API changes a before and after example of the API response should be added to the pull request to help with review.
 7. For backend changes, a before and after example of logs to demonstrate the change should be added to the pull request to help with review.
-8. For frontend changes run the frontend development server using `npm run dev` in the `web` directory to test changes locally and access it at `http://localhost:3000`. It is not required to build the web project or copy the files to the `static/web` directory for local development.
+8. Do not build the web project or copy the files to the `static/web` directory for local development.
 9. When running the frontend development server, the local backend service must also be running. You can run the backend service using `go run main.go` in the root of the repository.
 10. The credentials for the backend development backend are username: admin and password: abc123 and uses HTTP Basic Auth. This is used for the admin web application and the admin APIs.
 11. The admin is found at `/admin`.
