@@ -86,12 +86,11 @@
 }
 
 .app-container .online-status-indicator .status-label {
-  color: var(--theme-color-palette-4);
+  color: var(--offline-color);
   text-transform: uppercase;
   font-size: 0.75rem;
   display: inline-block;
   margin-right: 0.5rem;
-  color: var(--offline-color);
 }
 
 .app-container .online-status-indicator .status-icon {
@@ -200,6 +199,6 @@
 .ant-menu-inline .ant-menu-item-divider {
   margin: 8px 16px !important;
   width: calc(100% - 32px) !important;
-  background-color: rgba(255, 255, 255, 0.2) !important;
+  background-color: rgb(255 255 255 / 20%) !important;
   box-sizing: border-box !important;
 }
