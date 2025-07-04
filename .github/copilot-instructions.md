@@ -55,4 +55,5 @@ After every UI change we should be able to see in the PR comments, visually, exa
 
 - When taking a screenshot of the web frontend or the admin web application, an instance of the Owncast backend service needs to be running locally by running `go run main.go` in the root of the repository as well.
 - When taking screenshots for PR documentation, create temporary files in /tmp directory or use patterns like _screenshot_.js and _screenshot_.png that are excluded by .gitignore.
+- Screnshots should be taken using the web dev server at `http://localhost:3000` and not the production build at `http://localhost:8080`.
 - Never commit temporary screenshot scripts or image files to the repository - they should only be used locally and uploaded directly to GitHub for PR comments.
