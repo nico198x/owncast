@@ -76,7 +76,7 @@ export const NameChangeModal: FC<NameChangeModalProps> = ({ closeModal }) => {
   const saveButton = (
     <Button
       type="primary"
-      id="owncast-name-change-button"
+      id="name-change-submit"
       onClick={handleNameChange}
       disabled={!saveEnabled()}
     >
