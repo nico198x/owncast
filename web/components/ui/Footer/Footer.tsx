@@ -11,7 +11,7 @@ export const Footer: FC = () => {
   const { t } = useTranslation();
   return (
     <footer className={styles.footer} id="footer">
-      <span id="owncast-powered-by">
+      <span id="owncast-powered-by-text">
         {t('Powered by Owncast')}
         <a href="https://owncast.online">&nbsp;v{versionNumber}</a>
       </span>

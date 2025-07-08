@@ -10,7 +10,7 @@ export type ChatActionMessageProps = {
 export const ChatActionMessage: FC<ChatActionMessageProps> = ({ body }) => (
   <div className={styles.chatActionPadding}>
     <div
-      id="owncast-chat-action-message"
+      id="owncast-chat-action-message-text"
       dangerouslySetInnerHTML={{ __html: body }}
       className={styles.chatAction}
     />
