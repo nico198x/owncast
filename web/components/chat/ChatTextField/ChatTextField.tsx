@@ -272,6 +272,7 @@ export const ChatTextField: FC<ChatTextFieldProps> = ({ defaultText, enabled, fo
           style={{ whiteSpace: 'pre-wrap', width: '100%' }}
           role="textbox"
           aria-label="Chat text input"
+          className="owncast-chat-input-field"
         />
         {enabled && (
           <div style={{ display: 'flex', paddingLeft: '5px' }}>
@@ -283,7 +284,7 @@ export const ChatTextField: FC<ChatTextFieldProps> = ({ defaultText, enabled, fo
               <button
                 type="button"
                 aria-label="Emoji picker"
-                className={styles.emojiButton}
+                className={`${styles.emojiButton} owncast-emoji-picker-button`}
                 title="Emoji picker button"
               >
                 <SmileOutlined />
@@ -292,7 +293,7 @@ export const ChatTextField: FC<ChatTextFieldProps> = ({ defaultText, enabled, fo
             <button
               type="button"
               aria-label="Send message"
-              className={styles.sendButton}
+              className={`${styles.sendButton} owncast-send-message-button`}
               title="Send message Button"
               onClick={sendMessage}
             >
