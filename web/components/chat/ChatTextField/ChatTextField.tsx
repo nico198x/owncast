@@ -227,7 +227,7 @@ export const ChatTextField: FC<ChatTextFieldProps> = ({ defaultText, enabled, fo
     if (!focusInput) {
       return;
     }
-    document.getElementById('chat-input-content-editable').focus({ preventScroll: true });
+    document.getElementById('owncast-chat-input-field').focus({ preventScroll: true });
   }, []);
 
   const getCustomEmoji = async () => {
@@ -261,7 +261,7 @@ export const ChatTextField: FC<ChatTextFieldProps> = ({ defaultText, enabled, fo
         )}
       >
         <ContentEditable
-          id="chat-input-content-editable"
+          id="owncast-chat-input-field"
           html={defaultText || ''}
           placeholder={enabled ? 'Send a message to chat' : 'Chat is disabled'}
           disabled={!enabled}
@@ -284,6 +284,7 @@ export const ChatTextField: FC<ChatTextFieldProps> = ({ defaultText, enabled, fo
               <button
                 type="button"
                 aria-label="Emoji picker"
+                id="owncast-emoji-picker-button"
                 className={`${styles.emojiButton} owncast-emoji-picker-button`}
                 title="Emoji picker button"
               >
@@ -293,6 +294,7 @@ export const ChatTextField: FC<ChatTextFieldProps> = ({ defaultText, enabled, fo
             <button
               type="button"
               aria-label="Send message"
+              id="owncast-send-message-button"
               className={`${styles.sendButton} owncast-send-message-button`}
               title="Send message Button"
               onClick={sendMessage}

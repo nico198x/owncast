@@ -65,7 +65,9 @@ export const Header: FC<HeaderComponentProps> = ({ name, chatAvailable, chatDisa
           placement="left"
         >
           <span className={styles.chatOfflineText}>
-            <span className="owncast-chat-offline-text">{t('Chat is offline')}</span>
+            <span id="owncast-chat-offline-text" className="owncast-chat-offline-text">
+              {t('Chat is offline')}
+            </span>
           </span>
         </Tooltip>
       )}
