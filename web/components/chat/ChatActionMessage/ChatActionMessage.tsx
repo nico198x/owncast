@@ -12,7 +12,7 @@ export const ChatActionMessage: FC<ChatActionMessageProps> = ({ body }) => (
     <div
       id="owncast-chat-action-message"
       dangerouslySetInnerHTML={{ __html: body }}
-      className={`${styles.chatAction} owncast-chat-action-message`}
+      className={styles.chatAction}
     />
   </div>
 );

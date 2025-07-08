@@ -79,7 +79,6 @@ export const NameChangeModal: FC<NameChangeModalProps> = ({ closeModal }) => {
       id="owncast-name-change-button"
       onClick={handleNameChange}
       disabled={!saveEnabled()}
-      className="owncast-name-change-button"
     >
       Change name
     </Button>
@@ -87,7 +86,7 @@ export const NameChangeModal: FC<NameChangeModalProps> = ({ closeModal }) => {
 
   return (
     <div>
-      <div id="owncast-name-change-description" className="owncast-name-change-description">
+      <div id="owncast-name-change-description">
         Your chat display name is what people see when you send chat messages.
       </div>
       <Form onSubmitCapture={handleNameChange} className={styles.form}>
@@ -117,7 +116,7 @@ export const NameChangeModal: FC<NameChangeModalProps> = ({ closeModal }) => {
           ))}
         </Select>
       </Form.Item>
-      <div id="owncast-name-change-auth-info" className="owncast-name-change-auth-info">
+      <div id="owncast-name-change-auth-info">
         You can also authenticate an IndieAuth or Fediverse account via the &quot;Authenticate&quot;
         menu.
       </div>

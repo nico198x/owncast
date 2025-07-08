@@ -28,10 +28,7 @@ export const ChatNameChangeMessage: FC<ChatNameChangeMessageProps> = ({ message 
       <div className={styles.nameChangeText}>
         <span style={{ color }}>{oldName}</span>
         <span className={styles.plain}>
-          <span id="owncast-name-change-text" className="owncast-name-change-text">
-            {' '}
-            is now known as{' '}
-          </span>
+          <span id="owncast-name-change-text"> is now known as </span>
         </span>
         <span style={{ color }}>{displayName}</span>
       </div>
