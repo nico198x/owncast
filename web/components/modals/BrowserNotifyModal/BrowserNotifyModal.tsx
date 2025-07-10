@@ -4,6 +4,7 @@ import UploadOutlined from '@ant-design/icons/lib/icons/UploadOutlined';
 import PlusSquareOutlined from '@ant-design/icons/lib/icons/PlusSquareOutlined';
 import { useRecoilValue } from 'recoil';
 import { ErrorBoundary } from 'react-error-boundary';
+import { useTranslation } from 'next-export-i18n';
 import { accessTokenAtom, clientConfigStateAtom } from '../../stores/ClientConfigStore';
 import {
   registerWebPushNotifications,
@@ -17,100 +18,120 @@ import { arePushNotificationSupported } from '../../../utils/browserPushNotifica
 
 const { Title } = Typography;
 
-const NotificationsNotSupported = () => (
-  <div>Browser notifications are not supported in your browser.</div>
-);
+const NotificationsNotSupported = () => {
+  const { t } = useTranslation();
+  return <div>{t('Browser notifications are not supported in your browser')}.</div>;
+};
 
-const NotificationsNotSupportedLocal = () => (
-  <div>Browser notifications are not supported for local servers.</div>
-);
+const NotificationsNotSupportedLocal = () => {
+  const { t } = useTranslation();
+  return <div>{t('Browser notifications are not supported for local servers')}.</div>;
+};
 
-const MobileSafariInstructions = () => (
-  <div>
-    <Title level={3}>Get notified on iOS</Title>
-    It takes a couple extra steps to make sure you get notified when your favorite streams go live.
-    <ol>
-      <li>
-        Tap the <strong>share</strong> button <UploadOutlined /> in Safari.
-      </li>
-      <li>
-        Scroll down and tap <strong>&ldquo;Add to Home Screen&rdquo;</strong> <PlusSquareOutlined />
-        .
-      </li>
-      <li>
-        Tap <strong>&ldquo;Add&rdquo;</strong>.
-      </li>
-      <li>Give this link a name and tap the new icon on your home screen</li>
+const MobileSafariInstructions = () => {
+  const { t } = useTranslation();
+  return (
+    <div>
+      <Title level={3}>{t('Get notified on iOS')}</Title>
+      {t(
+        'It takes a couple extra steps to make sure you get notified when your favorite streams go live',
+      )}
+      .
+      <ol>
+        <li>
+          {t('Tap the')} <strong>{t('share')}</strong> {t('button')} <UploadOutlined />{' '}
+          {t('in Safari')}.
+        </li>
+        <li>
+          {t('Scroll down and tap')} <strong>&ldquo;{t('Add to Home Screen')}&rdquo;</strong>{' '}
+          <PlusSquareOutlined />.
+        </li>
+        <li>
+          {t('Tap')} <strong>&ldquo;{t('Add')}&rdquo;</strong>.
+        </li>
+        <li>{t('Give this link a name and tap the new icon on your home screen')}</li>
 
-      <li>Come back to this screen and enable notifications.</li>
-      <li>
-        Tap <strong>&ldquo;Allow&rdquo;</strong> when prompted.
-      </li>
-    </ol>
-  </div>
-);
+        <li>{t('Come back to this screen and enable notifications')}.</li>
+        <li>
+          {t('Tap')} <strong>&ldquo;{t('Allow')}&rdquo;</strong> {t('when prompted')}.
+        </li>
+      </ol>
+    </div>
+  );
+};
 
 export type PermissionPopupPreviewProps = {
   start: () => void;
 };
 
-const PermissionPopupPreview: FC<PermissionPopupPreviewProps> = ({ start }) => (
-  <div id="browser-push-preview-box" className={styles.pushPreview}>
-    <div className={styles.inner}>
-      <div className={styles.title}>{window.location.toString()} wants to</div>
-      <div className={styles.permissionLine}>
-        <svg
-          className={styles.bell}
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M14 12.3333V13H2V12.3333L3.33333 11V7C3.33333 4.93333 4.68667 3.11333 6.66667 2.52667C6.66667 2.46 6.66667 2.4 6.66667 2.33333C6.66667 1.97971 6.80714 1.64057 7.05719 1.39052C7.30724 1.14048 7.64638 1 8 1C8.35362 1 8.69276 1.14048 8.94281 1.39052C9.19286 1.64057 9.33333 1.97971 9.33333 2.33333C9.33333 2.4 9.33333 2.46 9.33333 2.52667C11.3133 3.11333 12.6667 4.93333 12.6667 7V11L14 12.3333ZM9.33333 13.6667C9.33333 14.0203 9.19286 14.3594 8.94281 14.6095C8.69276 14.8595 8.35362 15 8 15C7.64638 15 7.30724 14.8595 7.05719 14.6095C6.80714 14.3594 6.66667 14.0203 6.66667 13.6667"
-            fill="#676670"
-          />
-        </svg>
-        <span className={styles.showNotificationsText}>Show notifications</span>
-      </div>
-      <div className={styles.buttonRow}>
-        <Button
-          type="primary"
-          onClick={() => {
-            start();
-          }}
-        >
-          Allow
-        </Button>
-        <button type="button" className={styles.disabled}>
-          Block
-        </button>
+const PermissionPopupPreview: FC<PermissionPopupPreviewProps> = ({ start }) => {
+  const { t } = useTranslation();
+  return (
+    <div id="browser-push-preview-box" className={styles.pushPreview}>
+      <div className={styles.inner}>
+        <div className={styles.title}>{window.location.toString()} wants to</div>
+        <div className={styles.permissionLine}>
+          <svg
+            className={styles.bell}
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M14 12.3333V13H2V12.3333L3.33333 11V7C3.33333 4.93333 4.68667 3.11333 6.66667 2.52667C6.66667 2.46 6.66667 2.4 6.66667 2.33333C6.66667 1.97971 6.80714 1.64057 7.05719 1.39052C7.30724 1.14048 7.64638 1 8 1C8.35362 1 8.69276 1.14048 8.94281 1.39052C9.19286 1.64057 9.33333 1.97971 9.33333 2.33333C9.33333 2.4 9.33333 2.46 9.33333 2.52667C11.3133 3.11333 12.6667 4.93333 12.6667 7V11L14 12.3333ZM9.33333 13.6667C9.33333 14.0203 9.19286 14.3594 8.94281 14.6095C8.69276 14.8595 8.35362 15 8 15C7.64638 15 7.30724 14.8595 7.05719 14.6095C6.80714 14.3594 6.66667 14.0203 6.66667 13.6667"
+              fill="#676670"
+            />
+          </svg>
+          <span className={styles.showNotificationsText}>{t('Show notifications')}</span>
+        </div>
+        <div className={styles.buttonRow}>
+          <Button
+            type="primary"
+            onClick={() => {
+              start();
+            }}
+          >
+            {t('Allow')}
+          </Button>
+          <button type="button" className={styles.disabled}>
+            {t('Block')}
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
-const NotificationsEnabled = () => (
-  <div>
-    <Title level={2}>Notifications are enabled</Title>
-    To disable push notifications from {window.location.hostname.toString()} access your browser
-    permissions for this site and turn off notifications.
-    <a href="https://owncast.online/docs/notifications"> Learn more.</a>
-  </div>
-);
+const NotificationsEnabled = () => {
+  const { t } = useTranslation();
+  return (
+    <div>
+      <Title level={2}>{t('Notifications are enabled')}</Title>
+      {t('To disable push notifications from')} {window.location.hostname.toString()}{' '}
+      {t('access your browser permissions for this site and turn off notifications')}.
+      <a href="https://owncast.online/docs/notifications"> {t('Learn more')}.</a>
+    </div>
+  );
+};
 
-const NotificationsDenied = () => (
-  <div>
-    <Title level={2}>Notifications are blocked on your device</Title>
-    To enable push notifications from {window.location.hostname.toString()} access your browser
-    permissions for this site and turn on notifications. Then reload this page to apply your updated
-    settings on this site.
-    <a href="https://owncast.online/docs/notifications"> Learn more.</a>
-  </div>
-);
+const NotificationsDenied = () => {
+  const { t } = useTranslation();
+  return (
+    <div>
+      <Title level={2}>{t('Notifications are blocked on your device')}</Title>
+      {t('To enable push notifications from')} {window.location.hostname.toString()}{' '}
+      {t(
+        'access your browser permissions for this site and turn on notifications. Then reload this page to apply your updated settings on this site',
+      )}
+      .<a href="https://owncast.online/docs/notifications"> {t('Learn more')}.</a>
+    </div>
+  );
+};
 
 export const BrowserNotifyModal = () => {
+  const { t } = useTranslation();
   const [error, setError] = useState<string>(null);
   const accessToken = useRecoilValue(accessTokenAtom);
   const config = useRecoilValue(clientConfigStateAtom);
@@ -181,18 +202,18 @@ export const BrowserNotifyModal = () => {
     >
       <Spin spinning={browserPushPermissionsPending}>
         <Row className={styles.description}>
-          Get notified right in the browser each time this stream goes live.
+          {t('Get notified right in the browser each time this stream goes live')}.
           <span>
             <a href="https://owncast.online/docs/notifications/#browser-notifications">
-              Learn more
+              {t('Learn more')}
             </a>
-            &nbsp; about Owncast browser notifications.
+            &nbsp; {t('about Owncast browser notifications')}.
           </span>
         </Row>
         <Row>
           {error && (
             <Alert
-              message="Browser Notification Error"
+              message={t('Browser Notification Error')}
               description={error}
               type="error"
               closable

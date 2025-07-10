@@ -2,6 +2,7 @@ import React, { ComponentType, FC } from 'react';
 import dynamic from 'next/dynamic';
 import { TabsProps } from 'antd';
 import { ErrorBoundary } from 'react-error-boundary';
+import { useTranslation } from 'next-export-i18n';
 import { SocialLink } from '../../../interfaces/social-link.model';
 import styles from './Content.module.scss';
 import { CustomPageContent } from '../CustomPageContent/CustomPageContent';
@@ -43,6 +44,8 @@ export const DesktopContent: FC<DesktopContentProps> = ({
   setShowFollowModal,
   supportFediverseFeatures,
 }) => {
+  const { t } = useTranslation();
+
   const aboutTabContent = (
     <div className={styles.bottomPageContentContainer}>
       <CustomPageContent content={extraPageContent} />
@@ -54,9 +57,9 @@ export const DesktopContent: FC<DesktopContentProps> = ({
       <FollowerCollection name={name} onFollowButtonClick={() => setShowFollowModal(true)} />
     </div>
   );
-  const items = [!!extraPageContent && { label: 'About', key: '2', children: aboutTabContent }];
+  const items = [!!extraPageContent && { label: t('About'), key: '2', children: aboutTabContent }];
   if (supportFediverseFeatures) {
-    items.push({ label: 'Followers', key: '3', children: followersTabContent });
+    items.push({ label: t('Followers'), key: '3', children: followersTabContent });
   }
 
   return (

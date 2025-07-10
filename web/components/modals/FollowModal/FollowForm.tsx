@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Input, Button, Alert, Spin, Space } from 'antd';
 import { FC, useState } from 'react';
+import { useTranslation } from 'next-export-i18n';
 import styles from './FollowModal.module.scss';
 import { isValidFediverseAccount } from '../../../utils/validators';
 
@@ -11,6 +12,7 @@ export type FollowFormProps = {
 };
 
 export const FollowForm: FC<FollowFormProps> = ({ handleClose }: FollowFormProps) => {
+  const { t } = useTranslation();
   const [remoteAccount, setRemoteAccount] = useState(null);
   const [valid, setValid] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -69,7 +71,7 @@ export const FollowForm: FC<FollowFormProps> = ({ handleClose }: FollowFormProps
     <Spin spinning={loading}>
       {errorMessage && (
         <Alert
-          message="Follow Error"
+          message={t('Follow Error')}
           description={errorMessage}
           type="error"
           closable
@@ -78,24 +80,24 @@ export const FollowForm: FC<FollowFormProps> = ({ handleClose }: FollowFormProps
       )}
 
       <div className={styles.inputContainer}>
-        <div className={styles.instructions}>Enter your username @server to follow</div>
+        <div className={styles.instructions}>{t('Enter your username @server to follow')}</div>
         <Input
           value={remoteAccount}
           size="large"
           onChange={e => handleAccountChange(e.target.value)}
-          placeholder="Your fediverse account @account@server"
+          placeholder={t('Your fediverse account @account@server')}
           defaultValue={remoteAccount}
         />
         <div className={styles.footer}>
-          You'll be redirected to your Fediverse server and asked to confirm the action.
+          {t("You'll be redirected to your Fediverse server and asked to confirm the action")}.
         </div>
       </div>
       <Space className={styles.buttons}>
         <Button onClick={joinButtonPressed} type="text">
-          Join the Fediverse
+          {t('Join the Fediverse')}
         </Button>
         <Button disabled={!valid} type="primary" onClick={remoteFollowButtonPressed}>
-          Follow
+          {t('Follow')}
         </Button>
       </Space>
     </Spin>
