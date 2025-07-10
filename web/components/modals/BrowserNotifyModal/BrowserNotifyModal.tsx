@@ -1,7 +1,6 @@
+/* eslint-disable react/no-danger */
 import { Row, Spin, Typography, Button, Alert } from 'antd';
 import React, { FC, useState } from 'react';
-import UploadOutlined from '@ant-design/icons/lib/icons/UploadOutlined';
-import PlusSquareOutlined from '@ant-design/icons/lib/icons/PlusSquareOutlined';
 import { useRecoilValue } from 'recoil';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useTranslation } from 'next-export-i18n';
@@ -33,28 +32,14 @@ const MobileSafariInstructions = () => {
   return (
     <div>
       <Title level={3}>{t('Get notified on iOS')}</Title>
-      {t(
-        'It takes a couple extra steps to make sure you get notified when your favorite streams go live',
-      )}
-      .
+      <div dangerouslySetInnerHTML={{ __html: t('ios_notification_instructions') }} />
       <ol>
-        <li>
-          {t('Tap the')} <strong>{t('share')}</strong> {t('button')} <UploadOutlined />{' '}
-          {t('in Safari')}.
-        </li>
-        <li>
-          {t('Scroll down and tap')} <strong>&ldquo;{t('Add to Home Screen')}&rdquo;</strong>{' '}
-          <PlusSquareOutlined />.
-        </li>
-        <li>
-          {t('Tap')} <strong>&ldquo;{t('Add')}&rdquo;</strong>.
-        </li>
-        <li>{t('Give this link a name and tap the new icon on your home screen')}</li>
-
-        <li>{t('Come back to this screen and enable notifications')}.</li>
-        <li>
-          {t('Tap')} <strong>&ldquo;{t('Allow')}&rdquo;</strong> {t('when prompted')}.
-        </li>
+        <li dangerouslySetInnerHTML={{ __html: t('ios_step_1') }} />
+        <li dangerouslySetInnerHTML={{ __html: t('ios_step_2') }} />
+        <li dangerouslySetInnerHTML={{ __html: t('ios_step_3') }} />
+        <li>{t('ios_step_4')}</li>
+        <li>{t('ios_step_5')}</li>
+        <li dangerouslySetInnerHTML={{ __html: t('ios_step_6') }} />
       </ol>
     </div>
   );
@@ -109,9 +94,13 @@ const NotificationsEnabled = () => {
   return (
     <div>
       <Title level={2}>{t('Notifications are enabled')}</Title>
-      {t('To disable push notifications from')} {window.location.hostname.toString()}{' '}
-      {t('access your browser permissions for this site and turn off notifications')}.
-      <a href="https://owncast.online/docs/notifications"> {t('Learn more')}.</a>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: t('notifications_enabled_message', {
+            hostname: window.location.hostname.toString(),
+          }),
+        }}
+      />
     </div>
   );
 };
@@ -121,11 +110,13 @@ const NotificationsDenied = () => {
   return (
     <div>
       <Title level={2}>{t('Notifications are blocked on your device')}</Title>
-      {t('To enable push notifications from')} {window.location.hostname.toString()}{' '}
-      {t(
-        'access your browser permissions for this site and turn on notifications. Then reload this page to apply your updated settings on this site',
-      )}
-      .<a href="https://owncast.online/docs/notifications"> {t('Learn more')}.</a>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: t('notifications_blocked_message', {
+            hostname: window.location.hostname.toString(),
+          }),
+        }}
+      />
     </div>
   );
 };
@@ -201,15 +192,12 @@ export const BrowserNotifyModal = () => {
       )}
     >
       <Spin spinning={browserPushPermissionsPending}>
-        <Row className={styles.description}>
-          {t('Get notified right in the browser each time this stream goes live')}.
-          <span>
-            <a href="https://owncast.online/docs/notifications/#browser-notifications">
-              {t('Learn more')}
-            </a>
-            &nbsp; {t('about Owncast browser notifications')}.
-          </span>
-        </Row>
+        <Row
+          className={styles.description}
+          dangerouslySetInnerHTML={{
+            __html: t('browser_notifications_description'),
+          }}
+        />
         <Row>
           {error && (
             <Alert

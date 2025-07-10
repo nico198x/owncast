@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react/no-danger */
 import { Space } from 'antd';
 import { FC } from 'react';
 import { useTranslation } from 'next-export-i18n';
@@ -16,15 +17,14 @@ export const FollowModal: FC<FollowModalProps> = ({ handleClose, account, name }
 
   return (
     <Space direction="vertical" id="follow-modal">
-      <div className={styles.header}>
-        {t(
-          "By following this stream you'll get notified on the Fediverse when it goes live. Now is a great time to",
-        )}
-        <a href="https://owncast.online/join-fediverse" target="_blank" rel="noreferrer">
-          &nbsp;{t('learn about the Fediverse')}&nbsp;
-        </a>
-        {t("if it's new to you")}.
-      </div>
+      <div
+        className={styles.header}
+        dangerouslySetInnerHTML={{
+          __html: t('follow_modal_header_with_link', {
+            learnMoreUrl: 'https://owncast.online/join-fediverse',
+          }),
+        }}
+      />
       <div className={styles.account}>
         <img src="/logo" alt="logo" className={styles.logo} />
         <div className={styles.username}>
