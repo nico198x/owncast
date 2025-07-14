@@ -48,6 +48,30 @@ export const Localization = {
     // Errors
     componentError: 'component_error',
 
+    // Browser notifications
+    browserNotifyUnsupported: 'browser_notify_unsupported',
+    browserNotifyUnsupportedLocal: 'browser_notify_unsupported_local',
+    browserNotifyIosTitle: 'browser_notify_ios_title',
+    browserNotifyIosDescription: 'browser_notify_ios_description',
+    browserNotifyIosShareButton: 'browser_notify_ios_share_button',
+    browserNotifyIosAddToHomeScreen: 'browser_notify_ios_add_to_home_screen',
+    browserNotifyIosAddButton: 'browser_notify_ios_add_button',
+    browserNotifyIosNameAndTap: 'browser_notify_ios_name_and_tap',
+    browserNotifyIosComeBack: 'browser_notify_ios_come_back',
+    browserNotifyIosAllowPrompt: 'browser_notify_ios_allow_prompt',
+    browserNotifyPermissionWantsTo: 'browser_notify_permission_wants_to',
+    browserNotifyShowNotifications: 'browser_notify_show_notifications',
+    browserNotifyAllowButton: 'browser_notify_allow_button',
+    browserNotifyBlockButton: 'browser_notify_block_button',
+    browserNotifyEnabledTitle: 'browser_notify_enabled_title',
+    browserNotifyEnabledDescription: 'browser_notify_enabled_description',
+    browserNotifyDeniedTitle: 'browser_notify_denied_title',
+    browserNotifyDeniedDescription: 'browser_notify_denied_description',
+    browserNotifyMainDescription: 'browser_notify_main_description',
+    browserNotifyLearnMore: 'browser_notify_learn_more',
+    browserNotifyErrorTitle: 'browser_notify_error_title',
+    browserNotifyErrorMessage: 'browser_notify_error_message',
+
     // Offline banner messages
     offlineBasic: 'offline_basic',
     offlineNotifyOnly: 'offline_notify_only',
