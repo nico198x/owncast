@@ -125,7 +125,7 @@ const PermissionPopupPreview: FC<PermissionPopupPreviewProps> = ({ start }) => (
         <Translation
           translationKey={Localization.Frontend.BrowserNotifyModal.permissionWantsTo}
           defaultText="{{hostname}} wants to"
-          vars={{ hostname: window.location.toString() }}
+          vars={{ hostname: window.location.hostname }}
         />
       </div>
       <div className={styles.permissionLine}>
