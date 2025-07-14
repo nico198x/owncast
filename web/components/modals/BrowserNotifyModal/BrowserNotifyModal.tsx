@@ -23,7 +23,7 @@ const { Title } = Typography;
 const NotificationsNotSupported = () => (
   <div>
     <Translation
-      translationKey={Localization.Frontend.browserNotifyUnsupported}
+      translationKey={Localization.Frontend.BrowserNotifyModal.unsupported}
       defaultText="Browser notifications are not supported in your browser."
     />
   </div>
@@ -32,7 +32,7 @@ const NotificationsNotSupported = () => (
 const NotificationsNotSupportedLocal = () => (
   <div>
     <Translation
-      translationKey={Localization.Frontend.browserNotifyUnsupportedLocal}
+      translationKey={Localization.Frontend.BrowserNotifyModal.unsupportedLocal}
       defaultText="Browser notifications are not supported for local servers."
     />
   </div>
@@ -42,12 +42,12 @@ const MobileSafariInstructions = () => (
   <div>
     <Title level={3}>
       <Translation
-        translationKey={Localization.Frontend.browserNotifyIosTitle}
+        translationKey={Localization.Frontend.BrowserNotifyModal.iosTitle}
         defaultText="Get notified on iOS"
       />
     </Title>
     <Translation
-      translationKey={Localization.Frontend.browserNotifyIosDescription}
+      translationKey={Localization.Frontend.BrowserNotifyModal.iosDescription}
       defaultText="It takes a couple extra steps to make sure you get notified when your favorite streams go live."
     />
     <ol>
@@ -55,7 +55,7 @@ const MobileSafariInstructions = () => (
         Tap the{' '}
         <strong>
           <Translation
-            translationKey={Localization.Frontend.browserNotifyIosShareButton}
+            translationKey={Localization.Frontend.BrowserNotifyModal.iosShareButton}
             defaultText="share"
           />
         </strong>{' '}
@@ -66,7 +66,7 @@ const MobileSafariInstructions = () => (
         <strong>
           &ldquo;
           <Translation
-            translationKey={Localization.Frontend.browserNotifyIosAddToHomeScreen}
+            translationKey={Localization.Frontend.BrowserNotifyModal.iosAddToHomeScreen}
             defaultText="Add to Home Screen"
           />
           &rdquo;
@@ -78,7 +78,7 @@ const MobileSafariInstructions = () => (
         <strong>
           &ldquo;
           <Translation
-            translationKey={Localization.Frontend.browserNotifyIosAddButton}
+            translationKey={Localization.Frontend.BrowserNotifyModal.iosAddButton}
             defaultText="Add"
           />
           &rdquo;
@@ -87,14 +87,14 @@ const MobileSafariInstructions = () => (
       </li>
       <li>
         <Translation
-          translationKey={Localization.Frontend.browserNotifyIosNameAndTap}
+          translationKey={Localization.Frontend.BrowserNotifyModal.iosNameAndTap}
           defaultText="Give this link a name and tap the new icon on your home screen"
         />
       </li>
 
       <li>
         <Translation
-          translationKey={Localization.Frontend.browserNotifyIosComeBack}
+          translationKey={Localization.Frontend.BrowserNotifyModal.iosComeBack}
           defaultText="Come back to this screen and enable notifications."
         />
       </li>
@@ -103,7 +103,7 @@ const MobileSafariInstructions = () => (
         <strong>
           &ldquo;
           <Translation
-            translationKey={Localization.Frontend.browserNotifyIosAllowPrompt}
+            translationKey={Localization.Frontend.BrowserNotifyModal.iosAllowPrompt}
             defaultText="Allow"
           />
           &rdquo;
@@ -123,7 +123,7 @@ const PermissionPopupPreview: FC<PermissionPopupPreviewProps> = ({ start }) => (
     <div className={styles.inner}>
       <div className={styles.title}>
         <Translation
-          translationKey={Localization.Frontend.browserNotifyPermissionWantsTo}
+          translationKey={Localization.Frontend.BrowserNotifyModal.permissionWantsTo}
           defaultText="{{hostname}} wants to"
           vars={{ hostname: window.location.toString() }}
         />
@@ -144,7 +144,7 @@ const PermissionPopupPreview: FC<PermissionPopupPreviewProps> = ({ start }) => (
         </svg>
         <span className={styles.showNotificationsText}>
           <Translation
-            translationKey={Localization.Frontend.browserNotifyShowNotifications}
+            translationKey={Localization.Frontend.BrowserNotifyModal.showNotifications}
             defaultText="Show notifications"
           />
         </span>
@@ -157,13 +157,13 @@ const PermissionPopupPreview: FC<PermissionPopupPreviewProps> = ({ start }) => (
           }}
         >
           <Translation
-            translationKey={Localization.Frontend.browserNotifyAllowButton}
+            translationKey={Localization.Frontend.BrowserNotifyModal.allowButton}
             defaultText="Allow"
           />
         </Button>
         <button type="button" className={styles.disabled}>
           <Translation
-            translationKey={Localization.Frontend.browserNotifyBlockButton}
+            translationKey={Localization.Frontend.BrowserNotifyModal.blockButton}
             defaultText="Block"
           />
         </button>
@@ -176,12 +176,12 @@ const NotificationsEnabled = () => (
   <div>
     <Title level={2}>
       <Translation
-        translationKey={Localization.Frontend.browserNotifyEnabledTitle}
+        translationKey={Localization.Frontend.BrowserNotifyModal.enabledTitle}
         defaultText="Notifications are enabled"
       />
     </Title>
     <Translation
-      translationKey={Localization.Frontend.browserNotifyEnabledDescription}
+      translationKey={Localization.Frontend.BrowserNotifyModal.enabledDescription}
       defaultText="To disable push notifications from {{hostname}} access your browser permissions for this site and turn off notifications. <a href='https://owncast.online/docs/notifications'>Learn more.</a>"
       vars={{ hostname: window.location.hostname.toString() }}
     />
@@ -192,12 +192,12 @@ const NotificationsDenied = () => (
   <div>
     <Title level={2}>
       <Translation
-        translationKey={Localization.Frontend.browserNotifyDeniedTitle}
+        translationKey={Localization.Frontend.BrowserNotifyModal.deniedTitle}
         defaultText="Notifications are blocked on your device"
       />
     </Title>
     <Translation
-      translationKey={Localization.Frontend.browserNotifyDeniedDescription}
+      translationKey={Localization.Frontend.BrowserNotifyModal.deniedDescription}
       defaultText="To enable push notifications from {{hostname}} access your browser permissions for this site and turn on notifications. Then reload this page to apply your updated settings on this site. <a href='https://owncast.online/docs/notifications'>Learn more.</a>"
       vars={{ hostname: window.location.hostname.toString() }}
     />
@@ -249,7 +249,7 @@ export const BrowserNotifyModal = () => {
       setError(null);
     } catch (e) {
       setError(
-        t(Localization.Frontend.browserNotifyErrorMessage, {
+        t(Localization.Frontend.BrowserNotifyModal.errorMessage, {
           message: e.message,
         }),
       );
@@ -279,13 +279,13 @@ export const BrowserNotifyModal = () => {
       <Spin spinning={browserPushPermissionsPending}>
         <Row className={styles.description}>
           <Translation
-            translationKey={Localization.Frontend.browserNotifyMainDescription}
+            translationKey={Localization.Frontend.BrowserNotifyModal.mainDescription}
             defaultText="Get notified right in the browser each time this stream goes live."
           />
           <span>
             <a href="https://owncast.online/docs/notifications/#browser-notifications">
               <Translation
-                translationKey={Localization.Frontend.browserNotifyLearnMore}
+                translationKey={Localization.Frontend.BrowserNotifyModal.learnMore}
                 defaultText="Learn more"
               />
             </a>
@@ -297,7 +297,7 @@ export const BrowserNotifyModal = () => {
             <Alert
               message={
                 <Translation
-                  translationKey={Localization.Frontend.browserNotifyErrorTitle}
+                  translationKey={Localization.Frontend.BrowserNotifyModal.errorTitle}
                   defaultText="Browser Notification Error"
                 />
               }
